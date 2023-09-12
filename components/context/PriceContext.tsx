@@ -8,7 +8,6 @@ import { useLendingData } from "./LendingDataProvider";
 import { useAppData } from "./AppDataProvider";
 import { Status, SubStatus } from "../utils/status";
 import axios from 'axios';
-import { EvmPriceServiceConnection } from "@pythnetwork/pyth-evm-js";
 
 const PriceContext = React.createContext<PriceValue>({} as PriceValue);
 

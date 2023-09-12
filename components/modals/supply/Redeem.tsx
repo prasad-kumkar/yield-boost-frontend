@@ -56,7 +56,7 @@ export default function Redeem({ market, amount, setAmount, isNative, max, isMax
 		if(isNative){
 			const wrapper = new ethers.Contract(protocol._wrapper, getABI("WrappedTokenGateway", chain?.id!))
 			const {v, r, s} = ethers.utils.splitSignature(data!);
-			let args = [market.inputToken.id, _amount, address, deadline, v, r, s, priceFeedUpdateData];
+			let args = [market.inputToken.id, _amount, address, deadline, v, r, s];
 			console.log(args);
 			tx = send(wrapper, "withdrawETHWithPermit", args);
 		} else {
@@ -64,8 +64,7 @@ export default function Redeem({ market, amount, setAmount, isNative, max, isMax
 			let args = [
 				market.inputToken.id,
 				_amount,
-				address,
-				priceFeedUpdateData
+				address
 			];
 			tx = send(pool, "withdraw", args)
 		}

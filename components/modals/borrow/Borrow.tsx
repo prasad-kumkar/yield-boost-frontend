@@ -50,12 +50,10 @@ const Borrow = ({ market, amount, setAmount, isNative, debtType, setDebtType, ma
 			.times(10 ** market.inputToken.decimals)
 			.toFixed(0);
 		
-		const priceFeedUpdateData = await getUpdateData(markets.map((m: any) => m.inputToken.id));
-
 		let tx;
 		if(isNative){
 			const wrapper = new ethers.Contract(protocol._wrapper, getABI("WrappedTokenGateway", chain?.id!))
-			let args = [market.inputToken.id, value, debtType, 0, priceFeedUpdateData];
+			let args = [market.inputToken.id, value, debtType, 0];
 			tx = send(wrapper, "borrowETH", args);
 		} else {
 			let pool = await getContract("LendingPool", chain?.id!, market.protocol._lendingPoolAddress);			
@@ -64,8 +62,7 @@ const Borrow = ({ market, amount, setAmount, isNative, debtType, setDebtType, ma
 				value, 
 				debtType,
 				0,
-				address,
-				priceFeedUpdateData
+				address
 			];
 			tx = send(pool, "borrow", args);
 		}
